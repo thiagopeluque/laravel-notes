@@ -10,18 +10,6 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    // Função usada somente nesse Controller por ser PRIVATE
-    // Foi criado um SERVICE para atender aos demais Controllers criados
-    
-    // private function decryptId($id) {
-    //     try {
-    //         $id = Crypt::decrypt($id);
-    //     } catch (DecryptException $error) {
-    //         return redirect()->route('home');
-    //     }
-    //     return $id;
-    // }
-
     public function index() {
         // Load Users Notes
         $id = session('user.id');

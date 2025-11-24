@@ -31,6 +31,10 @@ class MainController extends Controller
     }
 
     public function newNote() {
+        return view('new_note');
+    }
+
+    public function newNoteSubmit() {
         echo "I'm creating a new note";
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Note;
 use App\Models\User;
 use App\Services\Operations;
 use Illuminate\Http\Request;
@@ -34,8 +35,35 @@ class MainController extends Controller
         return view('new_note');
     }
 
-    public function newNoteSubmit() {
-        echo "I'm creating a new note";
+    public function newNoteSubmit(Request $request) {
+        // Form Validation
+        $request->validate(
+            [
+                'text_title' => 'required|min:3|max:200',
+                'text_note' => 'required|min:3|max:3000'
+            ],
+            [
+                'text_title.required' => 'O Título é obrigatório.',
+                'text_note.required' => 'A Nota é obrigatória.',
+                'text_title.min' => 'O título deve ter no mínimo :min caracteres.',
+                'text_title.max' => 'O título deve ter no mínimo :max caracteres.',
+                'text_note.min' => 'A nota deve ter no máximo :min caracteres.',
+                'text_note.max' => 'A nota deve ter no máximo :max caracteres.'
+            ]
+        );
+
+        // Get User ID from Session
+        $id = session('user.id');
+
+        // Save the Note
+        $note = new Note();
+        $note->user_id = $id;
+        $note->title = $request->text_title;
+        $note->text = $request->text_note;
+        $note->save();
+
+        // Redirect
+        return redirect()->route('home');
     }
 
     public function editNote($id) {
